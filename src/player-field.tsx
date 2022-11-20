@@ -2,7 +2,9 @@ import React from "react";
 
 import "./styles.css";
 
-class Square extends React.Component {
+import { PlayerFieldPropsType, GamePhaseSquarePropsType, Cell } from "./types";
+
+class Square extends React.Component<GamePhaseSquarePropsType> {
   handleSelect = () => {
     this.props.handleSelect(this.props.cell);
   };
@@ -52,7 +54,7 @@ class Square extends React.Component {
           this.props.ship?.isDown ||
           this.props.turnEnded ||
           this.props.gameEnded
-            ? null
+            ? undefined
             : this.handleSelect
         }
         className={this.selectClassName()}
@@ -69,8 +71,8 @@ class Square extends React.Component {
   }
 }
 
-export default class PlayerField extends React.Component {
-  handleSelect = (cell) => {
+export default class PlayerField extends React.Component<PlayerFieldPropsType> {
+  handleSelect = (cell: Cell) => {
     this.props.handleSelect(cell, this.props.id);
   };
 

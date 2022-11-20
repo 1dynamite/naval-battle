@@ -1,9 +1,12 @@
 import React from "react";
 
-let intervalId;
+let intervalId: ReturnType<typeof setInterval>;
 
-export default class StatusMessage extends React.Component {
-  constructor(props) {
+export default class StatusMessage extends React.Component<
+  { message: { message: string } },
+  { index: number }
+> {
+  constructor(props: { message: { message: string } }) {
     super(props);
 
     this.state = {
@@ -15,7 +18,7 @@ export default class StatusMessage extends React.Component {
     clearInterval(intervalId);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: any) {
     if (this.props.message !== prevProps.message) {
       this.setState({ index: 0 });
       intervalId = setInterval(() => {

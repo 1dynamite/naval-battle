@@ -7,8 +7,11 @@ import PlayerField from "./player-field";
 import ArrangeShips from "./arrange-ships";
 import StatusMessage from "./status-message";
 
-class App extends React.Component {
-  constructor(props) {
+import IState, { Cell } from "./types";
+import { ShipLocations } from "./types";
+
+class App extends React.Component<{}, IState> {
+  constructor(props: {}) {
     super(props);
     this.state = {
       gamePhase: "not started",
@@ -24,18 +27,18 @@ class App extends React.Component {
 
   handleGameStart = () => {
     this.setState((state) => {
-      const gamePhase = {
+      const newState: any = {
         gamePhase:
           state.gamePhase === "not started" ? "arrange" : "not started",
       };
 
-      if (gamePhase.gamePhase === "not started") {
-        gamePhase.currentPlayer = 0;
-        gamePhase.shipLocations = [[], []];
+      if (newState.gamePhase === "not started") {
+        newState.currentPlayer = 0;
+        newState.shipLocations = [[], []];
       }
 
       return {
-        ...gamePhase,
+        ...newState,
         moveStarted: false,
         turnEnded: false,
         selectedCell: null,
@@ -50,13 +53,14 @@ class App extends React.Component {
 
       const index = state.shipLocations[state.selectedCell.id].findIndex(
         (el) =>
-          el.row === state.selectedCell.cell.row &&
+          el.row === state.selectedCell?.cell.row &&
           el.column === state.selectedCell.cell.column
       );
       const shipLocationsCopy = [...state.shipLocations];
 
       if (index === -1) {
         return {
+          ...state,
           missedCells: [
             ...state.missedCells,
             {
@@ -78,6 +82,7 @@ class App extends React.Component {
       ) {
         let name = state.currentPlayer ? "2nd" : "1st";
         return {
+          ...state,
           shipLocations: shipLocationsCopy,
           selectedCell: null,
           statusMessage: {
@@ -88,6 +93,7 @@ class App extends React.Component {
       }
 
       return {
+        ...state,
         shipLocations: shipLocationsCopy,
         selectedCell: null,
         statusMessage: { message: "Killed" },
@@ -108,14 +114,17 @@ class App extends React.Component {
     } else this.setState({ currentPlayer: 1 });
   };
 
-  handleShipPlacement = (cell, id) => {
+  handleShipPlacement = (cell: Cell, id: 0 | 1) => {
     this.setState((state) => {
       const index = state.shipLocations[id].findIndex(
         (el) => el.row === cell.row && el.column === cell.column
       );
-      const shipLocationsCopy = [...state.shipLocations];
+      const shipLocationsCopy = [...state.shipLocations] as [
+        ShipLocations,
+        ShipLocations
+      ];
 
-      if (index === -1) shipLocationsCopy[id].push(cell);
+      if (index === -1) shipLocationsCopy[id].push({ ...cell, isDown: false });
       else shipLocationsCopy[id].splice(index, 1);
 
       return { shipLocations: shipLocationsCopy };
@@ -135,11 +144,11 @@ class App extends React.Component {
     }));
   };
 
-  handleSelect = (cell, id) => {
+  handleSelect = (cell: Cell, id: 0 | 1) => {
     this.setState((state) => {
       if (
         state.selectedCell?.cell.row === cell.row &&
-        state.selectedCell.cell.column === cell.column
+        state.selectedCell?.cell.column === cell.column
       )
         return { selectedCell: null };
 
@@ -226,7 +235,7 @@ class App extends React.Component {
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
 
-function gamePhaseMenu(component) {
+function gamePhaseMenu(component: App) {
   return (
     <div className="menu">
       <div className="control-panel">
@@ -269,7 +278,7 @@ function gamePhaseMenu(component) {
   );
 }
 
-function arrangeShipsPhaseMenu(component) {
+function arrangeShipsPhaseMenu(component: App) {
   return (
     <div className="menu">
       <div className="control-panel">
@@ -291,7 +300,7 @@ function arrangeShipsPhaseMenu(component) {
   );
 }
 
-function hoppingTitle(component) {
+function hoppingTitle(component: App) {
   return (
     <>
       {component.state.currentPlayer ? (

@@ -1,8 +1,13 @@
 import React from "react";
 
 import "./styles.css";
+import {
+  ArrangePhaseSquarePropsType,
+  ArrangeShipsPropsType,
+  Cell,
+} from "./types";
 
-class Square extends React.Component {
+class Square extends React.Component<ArrangePhaseSquarePropsType> {
   handleShipPlacement = () => {
     this.props.handleShipPlacement(this.props.cell);
   };
@@ -15,8 +20,8 @@ class Square extends React.Component {
   }
 }
 
-export default class ArrangeShips extends React.Component {
-  handleShipPlacement = (cell) => {
+export default class ArrangeShips extends React.Component<ArrangeShipsPropsType> {
+  handleShipPlacement = (cell: Cell) => {
     this.props.handleShipPlacement(cell, this.props.id);
   };
 
