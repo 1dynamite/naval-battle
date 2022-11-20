@@ -1,0 +1,346 @@
+.row {
+  display: flex;
+  position: relative;
+}
+
+.square {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  border: 1px solid black;
+  font-size: 30px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.ocean-field {
+  background-image: url("https://media.altphotos.com/cache/images/2017/03/04/04/x800/sea-ocean-water-texture.jpg");
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  animation-name: oceanWaves;
+  animation-duration: 35s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.field {
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes oceanWaves {
+  from {
+    transform: translate(0);
+  }
+  to {
+    transform: translate(50%);
+  }
+}
+
+.ship {
+  background-image: url("https://static.thenounproject.com/png/9270-200.png");
+  background-position: center;
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  animation-name: bobbingShip;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  height: 100%;
+}
+
+@keyframes bobbingShip {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, -6%);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.ship-down {
+  background-image: url("https://static.thenounproject.com/png/9270-200.png");
+  background-position: center;
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  animation-name: bobbingShipDown;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  height: 100%;
+  position: relative;
+}
+
+.smoke {
+  background-image: url("https://i.imgur.com/YUl0DZy.png");
+  background-position: 30% 20%;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+@keyframes bobbingShipDown {
+  0% {
+    transform: translate(0, 5%) rotate(30deg);
+  }
+  50% {
+    transform: translate(0, 0) rotate(30deg);
+  }
+
+  100% {
+    transform: translate(0, 5%) rotate(30deg);
+  }
+}
+
+.enemy-cell {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.status-message-letter {
+  animation-name: displayLetter;
+  animation-duration: 1s;
+}
+
+@keyframes displayLetter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.opacity-zero {
+  opacity: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+.not-my-turn {
+  display: none;
+}
+
+.enemy-field-text {
+  font-size: smaller;
+  margin: 0;
+  background-color: #ffb6c1;
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+}
+
+.message {
+  font-size: smaller;
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  margin: 0;
+  color: gray;
+}
+
+.ship-miss {
+  background-color: transparent;
+}
+
+.selected-cell {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+body {
+  margin: 0;
+}
+
+.main-bg-image {
+  background-image: url("https://images.alphacoders.com/108/thumb-1920-108913.jpg");
+  background-size: cover;
+  height: 100vh;
+}
+
+.game-board {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  transition: backdrop-filter 0.7s;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.player-fields {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  max-width: 350px;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+}
+
+.menu {
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.whose-turn-header {
+  margin: 0.3rem 0 1rem 0;
+  color: white;
+}
+
+.game-phase-instruction {
+  margin: 0;
+  margin-bottom: 1rem;
+  color: white;
+  font-size: 1rem;
+}
+
+.result-box {
+  background-color: white;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 2rem;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.hop {
+  animation-name: hopAnimation;
+  animation-duration: 0.5s;
+  display: inline-block;
+}
+
+@keyframes hopAnimation {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, -5px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.hop-0 {
+  animation-delay: 0s;
+}
+
+.hop-1 {
+  animation-delay: 0.1s;
+}
+
+.hop-2 {
+  animation-delay: 0.2s;
+}
+
+.hop-3 {
+  animation-delay: 0.3s;
+}
+
+.hop-4 {
+  animation-delay: 0.4s;
+}
+
+.hop-5 {
+  animation-delay: 0.5s;
+}
+
+.hop-6 {
+  animation-delay: 0.6s;
+}
+
+.hop-7 {
+  animation-delay: 0.7s;
+}
+
+.hop-8 {
+  animation-delay: 0.8s;
+}
+
+.hop-9 {
+  animation-delay: 0.9s;
+}
+
+.hop-10 {
+  animation-delay: 1s;
+}
+
+.hop-11 {
+  animation-delay: 1.1s;
+}
+
+button {
+  background-color: #f17b21;
+  padding: 0.3rem 0.5rem;
+  outline: none;
+  border: none;
+}
+
+button:disabled {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: default;
+}
+
+.button-secondary {
+  background-color: white;
+  color: #a7581d;
+}
+
+.button-larger {
+  font-size: large;
+  padding: 0.5rem 0.9rem;
+}
+
+@media screen and (max-width: 420px) {
+  .menu {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2rem;
+    gap: 1rem;
+  }
+
+  .result-box {
+    margin-right: 0rem;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .player-fields {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+}
